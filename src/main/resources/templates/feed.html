@@ -19,7 +19,7 @@
         <th>メッセージタイプ</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="dataTable">
     <tr th:each="e : ${data}">
         <td th:text="${e.preamble}">...</td>
         <td th:text="${e.mt}">...</td>

@@ -16,8 +16,7 @@
         <div id="title">
             <h1>Common EWS Message Application</h1>
         </div>
-    <table id="allItems" class="table table-striped">
-        <tbody id ="dataTable">
+    <table id="comments" class="table table-striped">
         <thead>
         <tr>
             <th>Preamble</th>
@@ -25,13 +24,12 @@
             <th>MessageType</th>
         </tr>
         </thead>
-
-
-        <tr th:each="e : ${data}">
-            <td th:text="${e.preamble}"></td>
-
+        <tbody>
+        <tr th:each=" comment : ${comments}">
+            <td th:text="${comment.preamble}"></td>
+            <td th:text="${comment.mt}"></td>
+            <td th:text="${comment.messageType}"></td>
         </tr>
-
         </tbody>
     </table>
     </div>
@@ -44,11 +42,22 @@
         this.start = function(){
 
         }
-        var dataTable = document.getElementById("dataTable");
+        var dataTable = document.getElementById("comments");
+
 
         var source = new EventSource("/feed");
         source.addEventListener("message", function(event) {
-            dataTable.innerHTML = event.data + dataTable.innerHTML;
+            var comment = JSON.parse(event.data);
+            console.log(comment);
+            //dataTable.innerHTML = event.data + dataTable.innerHTML;
+            var row = dataTable.getElementsByTagName("tbody")[0].insertRow(0);
+            var cell0 = row.insertCell(0);
+            var cell1 = row.insertCell(1);
+            var cell2 = row.insertCell(2);
+            cell0.innerHTML = comment.preamble;
+            cell1.innerHTML = comment.mt;
+            cell2.innerHTML = comment.messageType;
+
         });
         this.stop = function (){
             this.source.close();
