@@ -29,8 +29,6 @@ public class CommonEWSMessageController {
     public void create(@RequestParam("commonews") String commonEws){
         CommonEWSMessageDecoder decoder = new CommonEWSMessageDecoder(CommonEWSMessageFormat.SEPTEMBER2020);
         var commonEWSMessage = decoder.decode(commonEws);
-        System.out.println(commonEWSMessage);
-        //System.out.println(commonEWSMessage);
         commonEWSMessageService.create(new CommonEWSSeptember2020(commonEWSMessage));
     }
 
