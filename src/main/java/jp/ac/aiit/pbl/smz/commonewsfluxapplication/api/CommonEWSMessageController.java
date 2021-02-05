@@ -1,14 +1,13 @@
 package jp.ac.aiit.pbl.smz.commonewsfluxapplication.api;
 
+import jp.ac.aiit.pbl.CommonEWSMessageDecoder;
+import jp.ac.aiit.pbl.format.CommonEWSMessageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 import reactor.core.publisher.Flux;
@@ -25,10 +24,14 @@ public class CommonEWSMessageController {
     @Autowired
     private CommonEWSMessageService commonEWSMessageService;
 
-    @PostMapping
+    @PostMapping("/request")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(){
-        commonEWSMessageService.create(new CommonEWSSeptember2020("PatternA","MT44","ALERT " + LocalDateTime.now().toString()));
+    public void create(@RequestParam("commonews") String commonEws){
+        CommonEWSMessageDecoder decoder = new CommonEWSMessageDecoder(CommonEWSMessageFormat.SEPTEMBER2020);
+        var commonEWSMessage = decoder.decode(commonEws);
+        System.out.println(commonEWSMessage);
+        //System.out.println(commonEWSMessage);
+        commonEWSMessageService.create(new CommonEWSSeptember2020(commonEWSMessage));
     }
 
 
