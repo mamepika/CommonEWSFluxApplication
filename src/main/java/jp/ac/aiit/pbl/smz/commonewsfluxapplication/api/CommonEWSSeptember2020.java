@@ -3,6 +3,8 @@ package jp.ac.aiit.pbl.smz.commonewsfluxapplication.api;
 import jp.ac.aiit.pbl.format.CommonEWSMessage;
 import org.seasar.doma.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,10 +25,12 @@ public class CommonEWSSeptember2020 {
         this.provider = "0000";
         this.severity = commonEWSMessage.getSeverity().getSeverity();
         this.guidance = commonEWSMessage.getGuidanceToReact().getInstruction();
-        this.latitude = commonEWSMessage.getLatitude();
-        this.longitude = commonEWSMessage.getLongitude();
+        this.latitude = BigDecimal.valueOf(commonEWSMessage.getLatitude()).setScale(3,RoundingMode.HALF_UP).doubleValue();
+        this.longitude = BigDecimal.valueOf(commonEWSMessage.getLongitude()).setScale(3, RoundingMode.HALF_UP).doubleValue();
         this.eventOnset = commonEWSMessage.getEventOnset().value().toLocalDateTime();
-
+        this.semiMajorAxisLength = commonEWSMessage.getSemiMajorAxisLength().value();
+        this.semiMinorAxisLength = commonEWSMessage.getSemiMinorAxisLength().value();
+        this.azimuthAngle = commonEWSMessage.getAzimuthAngle().value();
     }
 
     public CommonEWSSeptember2020(){
@@ -56,6 +60,12 @@ public class CommonEWSSeptember2020 {
     private Double longitude;
 
     private LocalDateTime eventOnset;
+
+    private Long semiMajorAxisLength;
+
+    private Long semiMinorAxisLength;
+
+    private Double azimuthAngle;
 
     public Integer getId() {
         return id;
@@ -144,5 +154,29 @@ public class CommonEWSSeptember2020 {
 
     public void setEventOnset(LocalDateTime eventOnset) {
         this.eventOnset = eventOnset;
+    }
+
+    public Long getSemiMajorAxisLength() {
+        return semiMajorAxisLength;
+    }
+
+    public void setSemiMajorAxisLength(Long semiMajorAxisLength) {
+        this.semiMajorAxisLength = semiMajorAxisLength;
+    }
+
+    public Long getSemiMinorAxisLength() {
+        return semiMinorAxisLength;
+    }
+
+    public void setSemiMinorAxisLength(Long semiMinorAxisLength) {
+        this.semiMinorAxisLength = semiMinorAxisLength;
+    }
+
+    public Double getAzimuthAngle() {
+        return azimuthAngle;
+    }
+
+    public void setAzimuthAngle(Double azimuthAngle) {
+        this.azimuthAngle = azimuthAngle;
     }
 }

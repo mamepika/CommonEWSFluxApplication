@@ -1,6 +1,7 @@
 package jp.ac.aiit.pbl.smz.commonewsfluxapplication.api;
 
 import jp.ac.aiit.pbl.CommonEWSMessageDecoder;
+import jp.ac.aiit.pbl.format.CommonEWSMessage;
 import jp.ac.aiit.pbl.format.CommonEWSMessageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

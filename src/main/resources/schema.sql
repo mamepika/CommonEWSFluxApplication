@@ -5,9 +5,12 @@ CREATE TABLE common (
     messageType VARCHAR (50) ,
     country VARCHAR (100) ,
     provider VARCHAR (20) ,
-    severity VARCHAR (50) ,
+    severity VARCHAR (150) ,
     guidance VARCHAR (200) ,
     latitude DOUBLE ,
     longitude DOUBLE ,
-    eventOnset DATETIME
+    eventOnset DATETIME ,
+    semiMajorAxisLength BIGINT ,
+    semiMinorAxisLength BIGINT ,
+    azimuthAngle DOUBLE
 );
